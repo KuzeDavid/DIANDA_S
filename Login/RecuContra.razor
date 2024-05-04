@@ -1,0 +1,46 @@
+﻿@page "/RecuperarContra"
+@inject NavigationManager NavigationManager
+@inject EmailService EmailService
+
+<head>
+    <link rel="stylesheet" href="css/DiandaStyle.css" />
+</head>
+
+<h1>Enviar correo electrónico</h1>
+
+<div>
+    <label>Destinatario:</label>
+    <input @bind="toEmail" />
+</div>
+<div>
+    <label>Asunto:</label>
+    <input @bind="subject" />
+</div>
+<div>
+    <label>Cuerpo:</label>
+    <textarea @bind="body"></textarea>
+</div>
+<button @onclick="EnviarCorreo">Enviar</button>
+
+@code {
+    private string toEmail;
+    private string subject;
+    private string body;
+
+    private async Task EnviarCorreo()
+    {
+        try
+        {
+            // Enviar correo electrónico utilizando el servicio de EmailService
+            await EmailService.SendEmailAsync(toEmail, subject, body);
+            // Mostrar mensaje de éxito o redirigir a otra página
+            // Puedes manejar la lógica de éxito aquí, como mostrar un mensaje o redirigir a otra página.
+            Console.WriteLine("Correo electrónico enviado con éxito");
+        }
+        catch (Exception ex)
+        {
+            // Manejar errores de envío de correo electrónico
+            Console.WriteLine($"Error al enviar correo electrónico: {ex.Message}");
+        }
+    }
+}

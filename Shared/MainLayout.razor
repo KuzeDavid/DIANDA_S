@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@using Blazored.Toast.Configuration
+
+@if (!EsPaginaLogin(NavigationManager.Uri))
+{
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+}
+
+<div class="main">
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+<BlazoredToasts Position="ToastPosition.BottomRight"
+                Timeout="5"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-thumbs-up"
+                ErrorIcon="fa fa-bug" />
+
+
+@code {
+    private bool EsPaginaLogin(string uri)
+    {
+        // Comprueba si la URL actual corresponde a la página de login
+        return uri.Contains("/Registro") || uri.Contains("/RecuperarContra") || uri.Contains("/Login");
+    }
+}
