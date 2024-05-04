@@ -1,4 +1,3 @@
-using Blazored.Toast;
 using BlazorServerAppCorreoPrueba.Data;
 using BlazorServerAppCorreoPrueba.Servicios;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.Toast;
 
 
 
