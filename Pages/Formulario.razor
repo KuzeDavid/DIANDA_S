@@ -116,7 +116,7 @@
         }
 
         // Enviar las respuestas al servidor Flask en Python
-        var response = await HttpClient.PostAsJsonAsync("http://127.0.0.1:5000/", respuestas);
+        var response = await HttpClient.PostAsJsonAsync("http://127.0.0.1:5002/", respuestas);
 
         if (response.IsSuccessStatusCode)
         {
