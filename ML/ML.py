@@ -69,4 +69,4 @@ def recibir_respuestas():
         return "ML Funcionando!"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5002)
