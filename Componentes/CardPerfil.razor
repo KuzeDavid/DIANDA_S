@@ -2,7 +2,7 @@
 @inject NavegacionService navegacionService
 
 
-<RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 90%; width: 90%;">
+<RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 85%; width: 85%;">
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
         <RadzenImage src="images/gato.jpg" Style="width: 100px; height: 100px; border-radius: 50%;" />
         <RadzenStack Gap="0">
@@ -35,7 +35,7 @@
     </RadzenCard>
     @if (!navegacionService.Alumno)
     {
-        <RadzenImage src="images/horario.jpg" style="display:block; margin: 0 auto; border-radius: 2%; height:350px" /> <!-- Remplazar con la del usuario cuando se tenga BD  y solo profes-->
+        <RadzenImage src="images/horario.jpg" style="display:block; margin: 0 auto; border-radius: 2%; height:300px" /> <!-- Remplazar con la del usuario cuando se tenga BD  y solo profes-->
     }
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0">
         <RadzenButton Variant="Variant.Text" class="rz-text-secondary-color" Text="@ModificarButtonText" Click="@ModificarClick" />

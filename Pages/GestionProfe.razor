@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <div class="mb-3"> <!-- body -->
                     @if(NomModal=="infoProf"){
-                        <Prueba_Blazor_2.Componentes.CardPerfilEstudiantes/>
+                        <BlazorServerAppCorreoPrueba.Componentes.CardPerfil/>
                     }
                     else if (NomModal == "aceptarSol"){
                         <RadzenText TextStyle="TextStyle.H4" Style="color: #000000; text-align: center; display: flex; justify-content: center;
@@ -167,10 +167,10 @@
     private async Task ShowModalHorario(Alumno alumno)
     {
         NomModal = "infoProf";
-        anchura = "60%";
+        anchura = "70%";
         modalDisplay = "block";
-        await Task.Delay(50); // Pequeño retraso para permitir que el DOM se actualice
-        animationClass = "fade-in"; // Aplicamos la clase de animación de fade-in
+        await Task.Delay(50); 
+        animationClass = "fade-in"; 
         // Aquí hacer algo con el alumno seleccionado si es necesario
     }
     private async Task AceptarSolicitud(SolicitudInscripcion solicitud)
@@ -178,13 +178,13 @@
         NomModal = "aceptarSol";
         anchura = "35%";
         modalDisplay = "block";
-        await Task.Delay(50); // Pequeño retraso para permitir que el DOM se actualice
-        animationClass = "fade-in"; // Aplicamos la clase de animación de fade-in
+        await Task.Delay(50); 
+        animationClass = "fade-in";
     }
     private async Task HideModal()
     {
-        animationClass = "fade-out"; // Aplicamos la clase de animación de fade-out
-        await Task.Delay(500); // Esperamos el tiempo de duración de la animación
+        animationClass = "fade-out";
+        await Task.Delay(500); 
         modalDisplay = "none";
     }
     protected override void OnInitialized()
@@ -199,8 +199,8 @@
 
     private async Task AceptarAlumno(){
         toastService.ShowSuccess("Alumno aceptado correctamente!");
-        animationClass = "fade-out"; // Aplicamos la clase de animación de fade-out
-        await Task.Delay(500); // Esperamos el tiempo de duración de la animación
+        animationClass = "fade-out"; // Aplicamos la clase de animación de fade-out ATENCION AQUI VA EL TOAST
+        await Task.Delay(500);
         modalDisplay = "none";
         
     }
