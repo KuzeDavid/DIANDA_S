@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blazored.Toast;
+using System.Net.Http;
 
 
 
@@ -39,6 +40,7 @@ namespace BlazorServerAppCorreoPrueba
             services.AddBlazoredToast();
             services.AddSingleton(new EmailService("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")); //Servicio de mensajeria
             services.AddSingleton<NavegacionService>();     //Servicio para actualizar estado del usuario: Mentor/Alumno
+            services.AddScoped(sp => new HttpClient {});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

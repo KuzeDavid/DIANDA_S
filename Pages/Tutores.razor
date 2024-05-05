@@ -1,0 +1,130 @@
+﻿@page "/Tutores"
+
+<PageTitle>Tutores de Tutores</PageTitle>
+<head>
+    <link rel="stylesheet" href="css/DiandaStyle.css" />
+</head>
+
+<style>
+    /*Modal sin lineas*/
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+    border: none; /* Elimina el borde */
+    margin: 10px; /* Elimina el margen */
+    padding: 0; /* Elimina el relleno */
+    }
+
+    /*Animar*/
+    .fade-in {
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
+
+<div class="contenedor">
+    <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">Estos son tus</RadzenText>
+    <RadzenText TextStyle="TextStyle.H3" Style="color: #ffb17a;"><strong>TUTORES</strong></RadzenText>
+</div>
+
+<div class="d-flex justify-content-center align-items-center" style="width: 100%; max-width:100%; height: 80vh;">
+    <RadzenRow Gap="0" Class="rz-my-12 rz-border-radius-6 rz-shadow-10 d-flex flex-column justify-content-center align-items-center" Style="width: 520px; overflow: hidden;">   
+            <div style="width: 500px; height: 600px; overflow-y: scroll; scrollbar-width: none; margin:10px;">
+                @foreach(var Tutor in TutoresInscritos)
+                {
+                <RadzenCard Variant="Variant.Filled" Class="rz-my-12" Style="background-color: #ffb17a; max-width: 500px;">
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                        <RadzenImage src="@Tutor.ImagenUrl" Style="width: 100px; height: 100px;" />
+                        <RadzenStack Gap="0">
+                            <RadzenText TextStyle="TextStyle.H5" Style="color: #ffffff;">@Tutor.Nombre</RadzenText>
+                            <RadzenButton Text="Perfil" Icon="find_in_page"
+                            Style="background-color: #ffb17a; color: #000000;" TextStyle="color: #ffffff;" Click="@(() => ShowModalHorario(Tutor))"/>
+                        </RadzenStack>
+                    </RadzenStack>
+                </RadzenCard>
+                }
+            </div>  
+    </RadzenRow>
+</div>
+
+
+<!-- modal -->
+
+<div class="modal @(animationClass)" tabindex="-1" @onclick="PreventModalClose" style="display: @modalDisplay; margin-left: 7%; z-index: 9999;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 60%;"> <!--custom-modal-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3"> <!-- body -->
+                    <BlazorServerAppCorreoPrueba.Componentes.CardPerfilEstudiantes/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="HideModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Capa de fondo oscuro -->
+<div class="modal-backdrop @(animationClass)" style="display: @modalDisplay"></div>
+
+@code {
+    [Parameter]
+    public string resultado { get; set; }
+
+    private string modalDisplay = "none";
+    private string NomModal = "";
+    private string animationClass = "";
+
+    private List<Tutor> TutoresInscritos = new List<Tutor>()
+    {
+        new Tutor(){ Nombre = "Tutor 1", ImagenUrl = "images/persona1.png" },
+        new Tutor(){ Nombre = "Tutor 2", ImagenUrl = "images/persona2.png" },
+        new Tutor(){ Nombre = "Tutor 3", ImagenUrl = "images/persona3.png" },
+        new Tutor(){ Nombre = "Tutor 4", ImagenUrl = "images/persona2.png" }
+    };
+
+    class Tutor
+    {
+        public string Nombre { get; set; }
+        public string ImagenUrl { get; set; }
+    }
+
+
+    void OnChange(string value, string name)
+    {
+        
+    }
+
+    
+    private async Task ShowModalHorario(Tutor Tutor)
+    {
+        NomModal = "horario";
+        modalDisplay = "block";
+        await Task.Delay(50); // Pequeño retraso para permitir que el DOM se actualice
+        animationClass = "fade-in"; // Aplicamos la clase de animación de fade-in
+
+        // Aquí hacer algo con el Tutor seleccionado si es necesario
+    }
+    private async Task HideModal()
+    {
+        animationClass = "fade-out"; // Aplicamos la clase de animación de fade-out
+        await Task.Delay(500); // Esperamos el tiempo de duración de la animación
+        modalDisplay = "none";
+    }
+
+    private void PreventModalClose()
+    {
+        // No hacemos nada, solo evitamos que el modal se cierre al hacer clic dentro de él
+    }
+
+    protected override void OnInitialized()
+    {
+        animationClass = "fade-out"; //Prevenir la ausencia del primer fade-in en modales
+    }
+
+}

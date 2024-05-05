@@ -1,0 +1,54 @@
+﻿@page "/resultado/{resultado}"
+
+<PageTitle>Resultado</PageTitle>
+<head>
+    <link rel="stylesheet" href="css/DiandaStyle.css" />
+</head>
+<div class="contenedor">
+    <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">TU ESTILO DE APRENDIZAJE ES:</RadzenText>
+    <RadzenText TextStyle="TextStyle.H3" Style="color: #ffb17a;"><strong>@resultado</strong></RadzenText>
+</div>
+
+<div class="d-flex flex-column justify-content-center align-items-center" style="height: 70vh;">
+
+    <div class="text-center mb-4">
+        <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">TUTORES CON TU ESTILO DE APRENDIZAJE</RadzenText>
+    </div>
+    <div class="card-container">
+        <RadzenCard Variant="Variant.Filled" Class="rz-my-12 rz-mx-auto" Style="background-color: #ffb17a; max-width: 650px">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenImage src="images/persona1.png" Style="width: 100px; height: 100px;" />
+                <RadzenStack Gap="0">
+                    <RadzenText TextStyle="TextStyle.H5" Style="color: #ffffff;">Nombre</RadzenText>
+                    <RadzenButton Text="Contactar" Icon="find_in_page"
+                                  Style="background-color: #ffb17a; color: #000000;" TextStyle="color: #ffffff;" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+        <RadzenCard Variant="Variant.Filled" Class="rz-my-12 rz-mx-auto" Style="background-color: #ffb17a; max-width: 650px">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenImage src="images/persona2.png" Style="width: 100px; height: 100px;" />
+                <RadzenStack Gap="0">
+                    <RadzenText TextStyle="TextStyle.H5" Style="color: #ffffff;">Nombre</RadzenText>
+                    <RadzenButton Text="Contactar" Icon="find_in_page"
+                                  Style="background-color: #ffb17a; color: #000000;" TextStyle="color: #ffffff;" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+        <RadzenCard Variant="Variant.Filled" Class="rz-my-12 rz-mx-auto" Style="background-color: #ffb17a; max-width: 650px">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenImage src="images/persona3.png" Style="width: 100px; height: 100px;" />
+                <RadzenStack Gap="0">
+                    <RadzenText TextStyle="TextStyle.H5" Style="color: #ffffff;">Nombre</RadzenText>
+                    <RadzenButton Text="Contactar" Icon="find_in_page"
+                                  Style="background-color: #ffb17a; color: #000000;" TextStyle="color: #ffffff;" />
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenCard>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string resultado { get; set; }
+}
