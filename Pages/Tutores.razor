@@ -11,7 +11,7 @@
     .modal-body,
     .modal-footer {
     border: none; /* Elimina el borde */
-    margin: 10px; /* Elimina el margen */
+    margin: 3px; /* Elimina el margen */
     padding: 0; /* Elimina el relleno */
     }
 
@@ -56,12 +56,12 @@
 <!-- modal -->
 
 <div class="modal @(animationClass)" tabindex="-1" @onclick="PreventModalClose" style="display: @modalDisplay; margin-left: 7%; z-index: 9999;">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 60%;"> <!--custom-modal-->
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 60%;">
+        <!--custom-modal-->
         <div class="modal-content">
-            <div class="modal-body">
-                <div class="mb-3"> <!-- body -->
-                    <BlazorServerAppCorreoPrueba.Componentes.CardPerfilEstudiantes/>
-                </div>
+            <div class="modal-body" style=" ">
+                <!-- body -->
+                <BlazorServerAppCorreoPrueba.Componentes.CardPerfilEstudiantes/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" @onclick="HideModal">Cerrar</button>

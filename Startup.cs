@@ -11,8 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazored.Toast;
+
 using System.Net.Http;
+using NetcodeHub.Packages.Components.Toast;
 
 
 
@@ -37,7 +38,7 @@ namespace BlazorServerAppCorreoPrueba
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            services.AddBlazoredToast();
+
             services.AddSingleton(new EmailService("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")); //Servicio de mensajeria
             services.AddSingleton<NavegacionService>();     //Servicio para actualizar estado del usuario: Mentor/Alumno
             services.AddScoped(sp => new HttpClient {});

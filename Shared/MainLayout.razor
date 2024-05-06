@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-@using Blazored.Toast.Configuration
+
 
 @if (!EsPaginaLogin(NavigationManager.Uri))
 {
@@ -14,13 +14,6 @@
     <div class="content px-4">
         @Body
     </div>
-
-    <BlazoredToasts Position="ToastPosition.BottomRight"
-                    Timeout="5"
-                    IconType="IconType.FontAwesome"
-                    SuccessClass="success-toast-override"
-                    SuccessIcon="fa fa-thumbs-up"
-                    ErrorIcon="fa fa-bug" />
 
 </div>
 

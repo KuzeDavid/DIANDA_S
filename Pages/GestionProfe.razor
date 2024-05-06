@@ -1,6 +1,6 @@
 ﻿@page "/GestionProfe"
-@inject IToastService toastService
-@using Blazored.Toast.Configuration
+@using Extentions
+@inject IJSRuntime jsruntime
 
 <PageTitle>Gestion para profesores</PageTitle>
 <head>
@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <div class="mb-3"> <!-- body -->
                     @if(NomModal=="infoProf"){
-                        <BlazorServerAppCorreoPrueba.Componentes.CardPerfil/>
+                        <BlazorServerAppCorreoPrueba.Componentes.CardPerfilEstudiantes/>
                     }
                     else if (NomModal == "aceptarSol"){
                         <RadzenText TextStyle="TextStyle.H4" Style="color: #000000; text-align: center; display: flex; justify-content: center;
@@ -117,13 +117,10 @@
 <!-- Capa de fondo oscuro -->
 <div class="modal-backdrop @(animationClass)" style="display: @modalDisplay"></div>
 
-<button class="btn btn-info" @onclick="@(() => toastService.ShowInfo("I'm an INFO message"))">Info Toast</button>
-<button class="btn btn-success" @onclick="@(() => toastService.ShowSuccess("I'm a SUCCESS message with a custom title"))">Success Toast</button>
-<button class="btn btn-warning" @onclick="@(() => toastService.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
-<button class="btn btn-danger" @onclick="@(() => toastService.ShowError("I'm an ERROR  message"))">Error Toast</button>
 
 
 @code {
+
     [Parameter]
     public string resultado { get; set; }
 
@@ -160,10 +157,10 @@
 
     void OnChange(string value, string name)
     {
-        
+
     }
 
-    
+
     private async Task ShowModalHorario(Alumno alumno)
     {
         NomModal = "infoProf";
@@ -191,17 +188,16 @@
     {
         animationClass = "fade-out"; //Prevenir la ausencia del primer fade-in en modales
     }
-    
+
     private void PreventModalClose()
     {
         // No hacemos nada, solo evitamos que el modal se cierre al hacer clic dentro de él
     }
 
     private async Task AceptarAlumno(){
-        toastService.ShowSuccess("Alumno aceptado correctamente!");
         animationClass = "fade-out"; // Aplicamos la clase de animación de fade-out ATENCION AQUI VA EL TOAST
         await Task.Delay(500);
         modalDisplay = "none";
-        
+        await jsruntime.ToastrSuccess("Alumno aceptado correctamente!");
     }
 }
