@@ -13,7 +13,7 @@
         <RadzenImage src="images/robot.png" Style="width: 100px; height: 100px;" />
         <RadzenStack Gap="0">
             <RadzenText TextStyle="TextStyle.H3" Style="color: #ffffff;">Hola! Bienvenido</RadzenText>
-            <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;"><b>Vamos a determinar tu estilo de aprendizaje, tómate tu tiempo para contestar las siguientes preguntas</b></RadzenText>
+            <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;"><b>Vamos a descubrir tu estilo de aprendizaje, tómate tu tiempo para contestar las siguientes preguntas</b></RadzenText>
         </RadzenStack>
     </RadzenStack>
 </RadzenCard>
@@ -39,7 +39,8 @@
         <RadzenIcon Icon="help_outline" IconColor="#ffb17a;" />
     </RadzenColumn>
     <RadzenColumn>
-        <RadzenText TextStyle="TextStyle.Button" Style="color: #ffffff;">Cuanto más detalladas sean tus respuestas, mejor podrá el modelo de aprendizaje automático determinar tu estilo de aprendizaje.</RadzenText>
+        <RadzenText TextStyle="TextStyle.Button" Style="color: #ffffff;">Las siguientes preguntas son afirmaciones, explica a detalle tus respuestas, 
+            cuanto más detalladas sean tus respuestas, mejor podrá el modelo de aprendizaje automático determinar tu estilo de aprendizaje.</RadzenText>
     </RadzenColumn>
 </RadzenRow>
 
@@ -90,16 +91,17 @@
 
     public List<Pregunta> preguntas = new List<Pregunta>()
     {
-        new Pregunta() { Nombre = "pregunta-uno", Texto = "1. Cuando necesitas aprender algo nuevo, ¿cómo prefieres hacerlo?" },
-        new Pregunta() { Nombre = "pregunta-dos", Texto = "2. ¿Qué te ayuda a recordar mejor la información?" },
-        new Pregunta() { Nombre = "pregunta-tres", Texto = "3. ¿Cómo te describes a ti mismo como estudiante?" },
-        new Pregunta() { Nombre = "pregunta-cuatro", Texto = "4. ¿Qué tipo de actividades disfrutas más en clase?" },
-        new Pregunta() { Nombre = "pregunta-cinco", Texto = "5. ¿Qué te distrae más fácilmente al estudiar?" },
-        new Pregunta() { Nombre = "pregunta-seis", Texto = "6. ¿Cómo tomas apuntes en clase?" },
-        new Pregunta() { Nombre = "pregunta-siete", Texto = "7. ¿Qué recursos utilizas con mayor frecuencia para aprender?" },
-        new Pregunta() { Nombre = "pregunta-ocho", Texto = "8. Si tuvieras que explicar un tema a alguien, ¿cómo lo harías?" },
-        new Pregunta() { Nombre = "pregunta-nueve", Texto = "9. ¿Qué te parece más difícil al aprender algo nuevo?" },
-        new Pregunta() { Nombre = "pregunta-diez", Texto = "10. ¿Qué estrategias utilizas para superar las dificultades al aprender?" }
+        new Pregunta() { Nombre = "pregunta-uno", Texto = "1. Recuerdo mejor algo si lo escribo" },
+        new Pregunta() { Nombre = "pregunta-dos", Texto = "2. Visualizo imágenes en mi cabeza constantemente " },
+        new Pregunta() { Nombre = "pregunta-tres", Texto = "3. Tomo muchas notas de lo que leo y escucho" },
+        new Pregunta() { Nombre = "pregunta-cuatro", Texto = "4. Me ayuda mirar a una persona cuando está hablando, me mantiene en enfoque" },
+        new Pregunta() { Nombre = "pregunta-cinco", Texto = "5. Cuando leo, lo hago en voz alta" },
+        new Pregunta() { Nombre = "pregunta-seis", Texto = "6. Necesito hablar las cosas para entenderlas mejor" },
+        new Pregunta() { Nombre = "pregunta-siete", Texto = "7. Prefiero que me digan cómo tengo que hacer las cosas que leer las instrucciones" },
+        new Pregunta() { Nombre = "pregunta-ocho", Texto = "8. Cuando no se me ocurre una palabra específica, uso mis manos y llamo al objeto “esa cosa”" },
+        new Pregunta() { Nombre = "pregunta-nueve", Texto = "9. Me desagrada leer o escuchar instrucciones, prefiero comenzar a hacer las cosas" },
+        new Pregunta() { Nombre = "pregunta-diez", Texto = "10. Estudio mejor si escucho música" },
+        
     };
 
     private string resultado = "";
