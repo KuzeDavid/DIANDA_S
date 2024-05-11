@@ -1,6 +1,7 @@
 ﻿@page "/formulario"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
+@inject NavegacionService navegacionService
 
 <head>
     <link rel="stylesheet" href="css/DiandaStyle.css" />
@@ -101,7 +102,7 @@
         new Pregunta() { Nombre = "pregunta-ocho", Texto = "8. Cuando no se me ocurre una palabra específica, uso mis manos y llamo al objeto “esa cosa”" },
         new Pregunta() { Nombre = "pregunta-nueve", Texto = "9. Me desagrada leer o escuchar instrucciones, prefiero comenzar a hacer las cosas" },
         new Pregunta() { Nombre = "pregunta-diez", Texto = "10. Estudio mejor si escucho música" },
-        
+
     };
 
     private string resultado = "";
@@ -123,13 +124,31 @@
         if (response.IsSuccessStatusCode)
         {
             resultado = await response.Content.ReadAsStringAsync();
-            NavigationManager.NavigateTo($"/resultado/{resultado}");
+            if (navegacionService.Alumno)
+            {
+                NavigationManager.NavigateTo($"/resultado/{resultado}"); //Cuando es alumno
+            }
+            else
+            {
+                NavigationManager.NavigateTo($"/HorarioyMateriales");   //Cuando es mentor
+            }
+
+            
         }
         else
         {
             // Manejar el error de la solicitud
         }
     }
+
+    /*protected override void OnInitialized()
+    {
+        navegacionService.OnMostrarImagenChange += ActualizarVisibilidadImagen;
+    }
+    private void ActualizarVisibilidadImagen()
+    {
+        StateHasChanged();
+    }*/
 
 }
 

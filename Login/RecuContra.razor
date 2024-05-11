@@ -1,6 +1,10 @@
 ﻿@page "/RecuperarContra"
 @inject NavigationManager NavigationManager
 @inject EmailService EmailService
+@using System;
+@using System.Text;
+@using Extentions
+@inject IJSRuntime jsruntime
 
 <head>
     <link rel="stylesheet" href="css/DiandaStyle.css" />
@@ -38,11 +42,13 @@
     {
         try
         {
-            body = "Su nueva contraseña es:";
+            string nuevaContrasena = GenerarContrasena();
+            body = $"Su nueva contraseña es: {nuevaContrasena}";
             // Enviar correo electrónico utilizando el servicio de EmailService
             await EmailService.SendEmailAsync(toEmail, subject, body);
-            // Mostrar mensaje de éxito o redirigir a otra página
-            // Puedes manejar la lógica de éxito aquí, como mostrar un mensaje o redirigir a otra página.
+
+            NavigationManager.NavigateTo("/Login");
+            await jsruntime.ToastrSuccess("Correo enviado con éxito");
             Console.WriteLine("Correo electrónico enviado con éxito");
         }
         catch (Exception ex)
@@ -51,4 +57,23 @@
             Console.WriteLine($"Error al enviar correo electrónico: {ex.Message}");
         }
     }
+    //RECORDEMOS ASIGNAR LA CONTRASEÑA EN LA BD
+    private string GenerarContrasena()
+    {
+        // Caracteres válidos para la contraseña
+        string caracteresValidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        // Generar un objeto aleatorio
+        Random random = new Random();
+
+        // Generar la contraseña aleatoria
+        StringBuilder contrasena = new StringBuilder();
+        for (int i = 0; i < 6; i++)
+        {
+            contrasena.Append(caracteresValidos[random.Next(caracteresValidos.Length)]);
+        }
+
+        return contrasena.ToString();
+    }
+
 }
