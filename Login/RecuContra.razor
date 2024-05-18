@@ -6,9 +6,6 @@
 @using Extentions
 @inject IJSRuntime jsruntime
 
-<head>
-    <link rel="stylesheet" href="css/DiandaStyle.css" />
-</head>
 
 <div class="text-center d-flex justify-content-center align-items-center">
     <img src="images/robot.png" style="width: 300px; height: 300px;" />
@@ -25,13 +22,14 @@
                             <RadzenTextBox Style="width:400px;" @bind-Value="@toEmail" Placeholder="Introduce tu correo electrónico" />
                             <button type="button" class="btn btn-secondary" @onclick="EnviarCorreo">Enviar</button>
                         </div>
-
                     </RadzenCard>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @code {
     private string toEmail;

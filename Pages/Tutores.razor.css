@@ -1,0 +1,19 @@
+﻿/*Modal sin lineas*/
+.modal-header,
+.modal-body,
+.modal-footer {
+    border: none; /* Elimina el borde */
+    margin: 3px; /* Elimina el margen */
+    padding: 0; /* Elimina el relleno */
+}
+
+/*Animar*/
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
