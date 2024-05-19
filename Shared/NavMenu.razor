@@ -1,4 +1,5 @@
 ﻿@inject NavegacionService navegacionService
+@inject NavigationManager Ir
 
 <style>
     .icono-radzen {
@@ -57,10 +58,41 @@
             opacity: 1;
         }
 
+    .top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .brand-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-logo {
+        margin-right: 8px;
+        height: 40px; 
+    }
+
+    .brand-text {
+        margin-left: auto;
+        color: white;
+        font-size: 1.25rem; 
+    }
+
 </style>
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">DIANDA</a>
+    <div class="brand-container">
+        <img src="/images/dianda.png" alt="Logo" class="navbar-logo" />
+        <span class="brand-text">DIANDA</span>
+    </div>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -131,6 +163,12 @@
             </div>
         </div>
 
+        <div class="fixed-bottom nav-item px-3">
+            <button class="btn btn-danger" @onclick="CerrarSesion">
+                <span class="bi bi-door-open"></span> Cerrar sesion
+            </button>
+        </div>
+
     </ul>
 </div>
 
@@ -157,5 +195,9 @@
     private void ActualizarVisibilidadImagen()
     {
         StateHasChanged();
+    }
+    private void CerrarSesion()
+    {
+        Ir.NavigateTo("Login");
     }
 }
