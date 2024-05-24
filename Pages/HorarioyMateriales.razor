@@ -1,4 +1,4 @@
-﻿@page "/HorarioyMateriales"
+﻿@page "/HorarioyMateriales/{resultado}"
 
 <style>
     /* file input modal*/
@@ -118,8 +118,15 @@
 </style>
 
 <div class="contenedor">
-    <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">TU ESTILO DE ENSEÑANZA ES:</RadzenText>
-    <RadzenText TextStyle="TextStyle.H3" Style="color: #ffb17a;"><strong>VISUAL</strong></RadzenText>
+    <RadzenCard Variant="Variant.Text" Class="rz-my-12 rz-mx-auto" Style="max-width: 650px">
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+            <RadzenImage src="images/robot.png" Style="width: 100px; height: 100px;" />
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H3" Style="color: #ffffff;">Excelente!<RadzenIcon Icon="offline_pin" IconColor="#ffb17a;" /></RadzenText>
+                <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;"><b>Tu estilo de enseñanza dominante es @resultado</b></RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center">
@@ -193,6 +200,9 @@
 
 
 @code {
+
+    [Parameter]
+    public string resultado { get; set; }
     private string modalDisplay = "none";
     private string NomModal = "";
     private string animationClass = "";

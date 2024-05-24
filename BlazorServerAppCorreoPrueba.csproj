@@ -8,6 +8,8 @@
     <PackageReference Include="NetcodeHub.Packages.Components.Toast" Version="1.0.4" />
     <PackageReference Include="Radzen.Blazor" Version="4.31.1" />
     <PackageReference Include="SendGrid" Version="9.29.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+
   </ItemGroup>
 
 </Project>

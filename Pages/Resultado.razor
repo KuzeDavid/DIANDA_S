@@ -1,14 +1,21 @@
 ﻿@page "/resultado/{resultado}"
 
 <div class="contenedor">
-    <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">TU ESTILO DE APRENDIZAJE ES:</RadzenText>
-    <RadzenText TextStyle="TextStyle.H3" Style="color: #ffb17a;"><strong>@resultado</strong></RadzenText>
+    <RadzenCard Variant="Variant.Text" Class="rz-my-12 rz-mx-auto" Style="max-width: 650px">
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+            <RadzenImage src="images/robot.png" Style="width: 100px; height: 100px;" />
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H3" Style="color: #ffffff;">Excelente!<RadzenIcon Icon="offline_pin" IconColor="#ffb17a;" /></RadzenText>
+                <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;"><b>Tu estilo de aprendizaje dominante es @resultado</b></RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 70vh;">
 
     <div class="text-center mb-4">
-        <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">TUTORES CON TU ESTILO DE APRENDIZAJE</RadzenText>
+        <RadzenText TextStyle="TextStyle.H6" Style="color: #ffffff;">A continuación, una lista de guías que pueden ayudarte:</RadzenText>
     </div>
     <div class="card-container">
         <RadzenCard Variant="Variant.Filled" Class="rz-my-12 rz-mx-auto" Style="background-color: #ffb17a; max-width: 650px">
@@ -47,4 +54,5 @@
 @code {
     [Parameter]
     public string resultado { get; set; }
+    
 }

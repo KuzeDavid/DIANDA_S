@@ -49,16 +49,23 @@ def recibir_respuestas():
         y_pred = clasificador_cargado.predict(X)
         print(y_pred) #recordar que auditivo:0 kinestésico:1 visual:2
 
-        moda = mode(y_pred)
-        print("La moda de y_pred es:", moda)
-        
-        if moda == 0:
-            resultado = "AUDITIVO"
-        elif moda == 1:
-            resultado = "KINESTÉSICO"
-        else:
-            resultado = "VISUAL"
+        predicciones_df = pd.Series(y_pred)
+        porcentajes = predicciones_df.value_counts(normalize=True) * 100
 
+        # Crear un diccionario para mapear las clases a sus nombres correspondientes
+        clase_nombres = {0: "Auditivo", 1: "Kinestésico", 2: "Visual"}
+
+        # Formatear la salida
+        resultado = [f"{clase_nombres[clase]}: {porcentaje:.0f}%" for clase, porcentaje in porcentajes.items()]
+        resultado = str(" ".join(resultado))
+
+        clase_mas_alta = porcentajes.idxmax()
+        porcentaje_mas_alto = porcentajes.max()
+        nombre_clase_mas_alta = clase_nombres[clase_mas_alta]
+        mas_alto = str(f"{nombre_clase_mas_alta}: {porcentaje_mas_alto:.0f}%")
+        print(mas_alto)
+        resultado = str(resultado.replace(mas_alto,"").strip())
+        resultado = str(f"{mas_alto}, mientras que tus equivalencias con el resto de los estilos son {resultado}")
         print(resultado)
 
         #######

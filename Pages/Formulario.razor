@@ -89,16 +89,16 @@
 
     public List<Pregunta> preguntas = new List<Pregunta>()
     {
-        new Pregunta() { Nombre = "pregunta-uno", Texto = "1. Recuerdo mejor algo si lo escribo" },
-        new Pregunta() { Nombre = "pregunta-dos", Texto = "2. Visualizo imágenes en mi cabeza constantemente " },
-        new Pregunta() { Nombre = "pregunta-tres", Texto = "3. Tomo muchas notas de lo que leo y escucho" },
-        new Pregunta() { Nombre = "pregunta-cuatro", Texto = "4. Me ayuda mirar a una persona cuando está hablando, me mantiene en enfoque" },
-        new Pregunta() { Nombre = "pregunta-cinco", Texto = "5. Cuando leo, lo hago en voz alta" },
-        new Pregunta() { Nombre = "pregunta-seis", Texto = "6. Necesito hablar las cosas para entenderlas mejor" },
-        new Pregunta() { Nombre = "pregunta-siete", Texto = "7. Prefiero que me digan cómo tengo que hacer las cosas que leer las instrucciones" },
-        new Pregunta() { Nombre = "pregunta-ocho", Texto = "8. Cuando no se me ocurre una palabra específica, uso mis manos y llamo al objeto “esa cosa”" },
-        new Pregunta() { Nombre = "pregunta-nueve", Texto = "9. Me desagrada leer o escuchar instrucciones, prefiero comenzar a hacer las cosas" },
-        new Pregunta() { Nombre = "pregunta-diez", Texto = "10. Estudio mejor si escucho música" },
+        new Pregunta() { Nombre = "visual-uno", Texto = "1. Recuerdo mejor algo si lo escribo" },
+        new Pregunta() { Nombre = "visual-dos", Texto = "2. Visualizo imágenes en mi cabeza constantemente " },
+        new Pregunta() { Nombre = "visual-tres", Texto = "3. Tomo muchas notas de lo que leo y escucho" },
+        new Pregunta() { Nombre = "visual-cuatro", Texto = "4. Me ayuda mirar a una persona cuando está hablando, me mantiene en enfoque" },
+        new Pregunta() { Nombre = "auditivo-cinco", Texto = "5. Cuando leo, lo hago en voz alta" },
+        new Pregunta() { Nombre = "auditivo-seis", Texto = "6. Necesito hablar las cosas para entenderlas mejor" },
+        new Pregunta() { Nombre = "auditivo-siete", Texto = "7. Prefiero que me digan cómo tengo que hacer las cosas que leer las instrucciones" },
+        new Pregunta() { Nombre = "kinestesico-ocho", Texto = "8. Cuando no se me ocurre una palabra específica, uso mis manos y llamo al objeto “esa cosa”" },
+        new Pregunta() { Nombre = "kinestesico-nueve", Texto = "9. Me desagrada leer o escuchar instrucciones, prefiero comenzar a hacer las cosas" },
+        new Pregunta() { Nombre = "kinestesico-diez", Texto = "10. Pienso mejor cuando puedo moverme, estar sentado mucho tiempo no es para mí" },
 
     };
 
@@ -127,7 +127,7 @@
             }
             else
             {
-                NavigationManager.NavigateTo($"/HorarioyMateriales");   //Cuando es mentor
+                NavigationManager.NavigateTo($"/HorarioyMateriales/{resultado}");   //Cuando es mentor
             }
 
             
