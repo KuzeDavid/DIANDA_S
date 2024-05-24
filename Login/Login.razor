@@ -23,6 +23,35 @@
             box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
         }
 
+    button {
+        background-color: #eee;
+        border: none;
+        padding: 1rem;
+        font-size: 1rem;
+        width: 10em;
+        border-radius: 1rem;
+        color: lightcoral;
+        box-shadow: 0 0.4rem #dfd9d9;
+        cursor: pointer;
+    }
+
+        button:active {
+            color: white;
+            box-shadow: 0 0.2rem #dfd9d9;
+            transform: translateY(0.2rem);
+        }
+
+        button:hover:not(:disabled) {
+            background: #ffb17a;
+            color: white;
+            text-shadow: 0 0.1rem #bcb4b4;
+        }
+
+        button:disabled {
+            cursor: auto;
+            color: grey;
+        }
+
 </style>
 
 <div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 90vh;">
@@ -54,10 +83,9 @@
                                         <div></div>
                                     </div>
                                     
-                                    <div class="mt-4 mb-4 d-flex justify-content-center">
-                                        <RadzenButton type="submit" Text="Iniciar Sesión" Icon="check_circle" Style="background-color: #ffb17a; color: #000000;" TextStyle="color: #ffffff;" />
+                                    <div class="text-center mb-3">
+                                        <button type="submit">Iniciar sesión</button>
                                     </div>
-
                                   
                                     <div class="mt-3 align-content-center">
                                         <a href="/RecuperarContra" >¿Olvidaste tu contraseña?</a>
