@@ -2,7 +2,177 @@
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Components.Forms
 
-<div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100vh;">
+<style>
+
+    /*inputs de info*/
+    .input {
+        border: none;
+        outline: none;
+        width: 400px;
+        border-radius: 15px;
+        padding: 1em;
+        background-color: #ccc;
+        box-shadow: inset 2px 5px 7px rgba(0,0,0,0.3);
+        transition: 300ms ease-in-out;
+    }
+
+        .input:focus {
+            background-color: white;
+            transform: scale(1.05);
+            box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+        }
+
+    /*opciones de carrera*/
+    .wrapper {
+        --font-color-dark: #323232;
+        --font-color-light: #FFF;
+        --bg-color: #fff;
+        --main-color: #323232;
+        --average-color: #6B64D8;
+        position: relative;
+        width: 360px;
+        height: 36px;
+        background-color: var(--bg-color);
+        border: 2px solid var(--main-color);
+        border-radius: 34px;
+        display: flex;
+        flex-direction: row;
+        box-shadow: 4px 4px var(--average-color);
+    }
+
+    .option {
+        width: 116.5px;
+        height: 28px;
+        position: relative;
+        top: 2px;
+        left: 2px;
+    }
+
+    .inputsel {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .btn {
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .span {
+        color: var(--font-color-dark);
+    }
+
+    .inputsel:checked + .btn {
+        background: var(--rz-primary-light) no-repeat 100% 70% fixed url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwNCIgaGVpZ2h0PSIxNDU4IiB2aWV3Qm94PSIwIDAgMTIwNCAxNDU4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBvcGFjaXR5PSIwLjUiIGZpbHRlcj0idXJsKCNmaWx0ZXIwX2ZfNDkzXzEwMTM0KSI+CjxjaXJjbGUgY3g9IjcyMi4xMjgiIGN5PSI4MzkuMDIiIHI9IjQ4MS40MTkiIGZpbGw9InVybCgjcGFpbnQwX3JhZGlhbF80OTNfMTAxMzQpIi8+CjwvZz4KPGcgb3BhY2l0eT0iMC41IiBmaWx0ZXI9InVybCgjZmlsdGVyMV9mXzQ5M18xMDEzNCkiPgo8Y2lyY2xlIGN4PSI0NzAuMzMzIiBjeT0iNTcwLjMzMyIgcj0iNDcwLjMzMyIgZmlsbD0idXJsKCNwYWludDFfcmFkaWFsXzQ5M18xMDEzNCkiLz4KPC9nPgo8ZyBvcGFjaXR5PSIwLjUiIGZpbHRlcj0idXJsKCNmaWx0ZXIyX2ZfNDkzXzEwMTM0KSI+CjxjaXJjbGUgY3g9IjY5MS41MTEiIGN5PSI1MjIuMjk3IiByPSIzMzEuNTAzIiBmaWxsPSJ1cmwoI3BhaW50Ml9yYWRpYWxfNDkzXzEwMTM0KSIvPgo8L2c+CjxnIG9wYWNpdHk9IjAuNSIgZmlsdGVyPSJ1cmwoI2ZpbHRlcjNfZl80OTNfMTAxMzQpIj4KPGNpcmNsZSBjeD0iNjA4LjI0NCIgY3k9IjEwNzkuOTciIHI9IjMzMS41MDMiIHRyYW5zZm9ybT0icm90YXRlKC04MS4yMjQ0IDYwOC4yNDQgMTA3OS45NykiIGZpbGw9InVybCgjcGFpbnQzX3JhZGlhbF80OTNfMTAxMzQpIi8+CjwvZz4KPGRlZnM+CjxmaWx0ZXIgaWQ9ImZpbHRlcjBfZl80OTNfMTAxMzQiIHg9IjE0MC43MDkiIHk9IjI1Ny42MDEiIHdpZHRoPSIxMTYyLjg0IiBoZWlnaHQ9IjExNjIuODQiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjFfZl80OTNfMTAxMzQiIHg9Ii0xMDAiIHk9IjAiIHdpZHRoPSIxMTQwLjY3IiBoZWlnaHQ9IjExNDAuNjciIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjJfZl80OTNfMTAxMzQiIHg9IjI2MC4wMDgiIHk9IjkwLjc5MzkiIHdpZHRoPSI4NjMuMDA2IiBoZWlnaHQ9Ijg2My4wMDYiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjNfZl80OTNfMTAxMzQiIHg9IjE3Ni42OTQiIHk9IjY0OC40MjMiIHdpZHRoPSI4NjMuMSIgaGVpZ2h0PSI4NjMuMSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJzaGFwZSIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1MCIgcmVzdWx0PSJlZmZlY3QxX2ZvcmVncm91bmRCbHVyXzQ5M18xMDEzNCIvPgo8L2ZpbHRlcj4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDBfcmFkaWFsXzQ5M18xMDEzNCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg3MjIuMTI4IDgzOS4wMikgcm90YXRlKDkwKSBzY2FsZSg0ODEuNDE5KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjFBNkMiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkYxQTZDIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDFfcmFkaWFsXzQ5M18xMDEzNCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg0NzAuMzMzIDU3MC4zMzMpIHJvdGF0ZSg5MCkgc2NhbGUoNDcwLjMzMykiPgo8c3RvcCBzdG9wLWNvbG9yPSIjM0FBQ0ZGIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzNBOTVGRiIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icGFpbnQyX3JhZGlhbF80OTNfMTAxMzQiIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjkxLjUxMSA1MjIuMjk3KSByb3RhdGUoOTApIHNjYWxlKDMzMS41MDMpIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQ4M0FGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0ODNBRkYiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50M19yYWRpYWxfNDkzXzEwMTM0IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDYwOC4yNDQgMTA3OS45Nykgcm90YXRlKDkwKSBzY2FsZSgzMzEuNTAzKSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkM4M0EiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZDODNBIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K');
+    }
+
+        .inputsel:checked + .btn .span {
+            color: var(--font-color-light);
+        }
+
+
+    /*seras mentor*/
+
+    .radio-input input {
+        display: none;
+    }
+
+    .radio-input {
+        --container_width: 360px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-radius: 9999px;
+        background-color: #fff;
+        color: #000000;
+        width: var(--container_width);
+        overflow: hidden;
+        border: 1px solid rgba(53, 52, 52, 0.226);
+    }
+
+        .radio-input label {
+            width: 100%;
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            font-weight: 600;
+            letter-spacing: -1px;
+            font-size: 16px;
+        }
+
+    .selection {
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: calc(var(--container_width) / 2);
+        z-index: 0;
+        left: 0;
+        top: 0;
+        transition: .15s ease;
+    }
+
+    .radio-input label:has(input:checked) {
+        color: #fff;
+    }
+
+        .radio-input label:has(input:checked) ~ .selection {
+            background: var(--rz-primary-light) no-repeat 100% 70% fixed url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwNCIgaGVpZ2h0PSIxNDU4IiB2aWV3Qm94PSIwIDAgMTIwNCAxNDU4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBvcGFjaXR5PSIwLjUiIGZpbHRlcj0idXJsKCNmaWx0ZXIwX2ZfNDkzXzEwMTM0KSI+CjxjaXJjbGUgY3g9IjcyMi4xMjgiIGN5PSI4MzkuMDIiIHI9IjQ4MS40MTkiIGZpbGw9InVybCgjcGFpbnQwX3JhZGlhbF80OTNfMTAxMzQpIi8+CjwvZz4KPGcgb3BhY2l0eT0iMC41IiBmaWx0ZXI9InVybCgjZmlsdGVyMV9mXzQ5M18xMDEzNCkiPgo8Y2lyY2xlIGN4PSI0NzAuMzMzIiBjeT0iNTcwLjMzMyIgcj0iNDcwLjMzMyIgZmlsbD0idXJsKCNwYWludDFfcmFkaWFsXzQ5M18xMDEzNCkiLz4KPC9nPgo8ZyBvcGFjaXR5PSIwLjUiIGZpbHRlcj0idXJsKCNmaWx0ZXIyX2ZfNDkzXzEwMTM0KSI+CjxjaXJjbGUgY3g9IjY5MS41MTEiIGN5PSI1MjIuMjk3IiByPSIzMzEuNTAzIiBmaWxsPSJ1cmwoI3BhaW50Ml9yYWRpYWxfNDkzXzEwMTM0KSIvPgo8L2c+CjxnIG9wYWNpdHk9IjAuNSIgZmlsdGVyPSJ1cmwoI2ZpbHRlcjNfZl80OTNfMTAxMzQpIj4KPGNpcmNsZSBjeD0iNjA4LjI0NCIgY3k9IjEwNzkuOTciIHI9IjMzMS41MDMiIHRyYW5zZm9ybT0icm90YXRlKC04MS4yMjQ0IDYwOC4yNDQgMTA3OS45NykiIGZpbGw9InVybCgjcGFpbnQzX3JhZGlhbF80OTNfMTAxMzQpIi8+CjwvZz4KPGRlZnM+CjxmaWx0ZXIgaWQ9ImZpbHRlcjBfZl80OTNfMTAxMzQiIHg9IjE0MC43MDkiIHk9IjI1Ny42MDEiIHdpZHRoPSIxMTYyLjg0IiBoZWlnaHQ9IjExNjIuODQiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjFfZl80OTNfMTAxMzQiIHg9Ii0xMDAiIHk9IjAiIHdpZHRoPSIxMTQwLjY3IiBoZWlnaHQ9IjExNDAuNjciIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjJfZl80OTNfMTAxMzQiIHg9IjI2MC4wMDgiIHk9IjkwLjc5MzkiIHdpZHRoPSI4NjMuMDA2IiBoZWlnaHQ9Ijg2My4wMDYiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNTAiIHJlc3VsdD0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl80OTNfMTAxMzQiLz4KPC9maWx0ZXI+CjxmaWx0ZXIgaWQ9ImZpbHRlcjNfZl80OTNfMTAxMzQiIHg9IjE3Ni42OTQiIHk9IjY0OC40MjMiIHdpZHRoPSI4NjMuMSIgaGVpZ2h0PSI4NjMuMSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJzaGFwZSIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1MCIgcmVzdWx0PSJlZmZlY3QxX2ZvcmVncm91bmRCbHVyXzQ5M18xMDEzNCIvPgo8L2ZpbHRlcj4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDBfcmFkaWFsXzQ5M18xMDEzNCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg3MjIuMTI4IDgzOS4wMikgcm90YXRlKDkwKSBzY2FsZSg0ODEuNDE5KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjFBNkMiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkYxQTZDIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDFfcmFkaWFsXzQ5M18xMDEzNCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg0NzAuMzMzIDU3MC4zMzMpIHJvdGF0ZSg5MCkgc2NhbGUoNDcwLjMzMykiPgo8c3RvcCBzdG9wLWNvbG9yPSIjM0FBQ0ZGIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzNBOTVGRiIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icGFpbnQyX3JhZGlhbF80OTNfMTAxMzQiIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjkxLjUxMSA1MjIuMjk3KSByb3RhdGUoOTApIHNjYWxlKDMzMS41MDMpIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzQ4M0FGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0ODNBRkYiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50M19yYWRpYWxfNDkzXzEwMTM0IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDYwOC4yNDQgMTA3OS45Nykgcm90YXRlKDkwKSBzY2FsZSgzMzEuNTAzKSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkM4M0EiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZDODNBIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K');
+            display: inline-block;
+        }
+
+    .radio-input label:nth-child(1):has(input:checked) ~ .selection {
+        transform: translateX(calc(var(--container_width) * 0/1));
+    }
+
+    .radio-input label:nth-child(2):has(input:checked) ~ .selection {
+        transform: translateX(calc(var(--container_width) * 1/2));
+    }
+    /*boton*/
+    button {
+        background-color: #eee;
+        border: none;
+        padding: 1rem;
+        font-size: 1rem;
+        width: 10em;
+        border-radius: 1rem;
+        color: lightcoral;
+        box-shadow: 0 0.4rem #dfd9d9;
+        cursor: pointer;
+    }
+
+        button:active {
+            color: white;
+            box-shadow: 0 0.2rem #dfd9d9;
+            transform: translateY(0.2rem);
+        }
+
+        button:hover:not(:disabled) {
+            background: lightcoral;
+            color: white;
+            text-shadow: 0 0.1rem #bcb4b4;
+        }
+
+        button:disabled {
+            cursor: auto;
+            color: grey;
+        }
+
+</style>
+
+<div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 95vh;">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -11,60 +181,67 @@
                         <EditForm Model="@user" OnValidSubmit="@RegisterUser" class="edit-form">
                             <DataAnnotationsValidator />
 
-                            <div class="form-group mb-3">
-                                <label for="userName">Nombre de Usuario</label>
-                                <InputText id="userName" class="form-control" @bind-Value="@user.UserName" />
+                            <div class="input-group mt-2 mb-4">
+                                <input id="userName" class="input" @bind-value="@user.UserName" placeholder="Usuario" >
                                 <ValidationMessage For="@(() => user.UserName)" />
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="email">Correo Electrónico</label>
-                                <InputText id="email" class="form-control" @bind-Value="@user.Email" />
+                            <div class="input-group mb-4">
+                                <input id="email" class="input" @bind-value="@user.Email" placeholder="Correo">
                                 <ValidationMessage For="@(() => user.Email)" />
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="password">Contraseña</label>
-                                <InputText id="password" type="password" class="form-control" @bind-Value="@user.Password" />
+                            <div class="input-group mb-4">
+                                <input id="password" type="password" class="input" @bind-value="@user.Password" placeholder="Contraseña">
                                 <ValidationMessage For="@(() => user.Password)" />
                             </div>
-
-                            <div class="form-group mb-3">
-                                <label for="confirmPassword">Confirmar Contraseña</label>
-                                <InputText id="confirmPassword" type="password" class="form-control" @bind-Value="@confirmPassword" />
+                                       
+                            <div class="input-group mb-4">
+                                <input id="confirmPassword" type="password" class="input" @bind-value="@confirmPassword" placeholder="Confirmar contraseña">
                                 <ValidationMessage For="@(() => confirmPassword)" />
                             </div>
-
-                            <div class="form-group mb-3">
-                                <label for="carrera">Carrera</label>
-                                <select id="carrera" class="form-control" @bind="user.Carrera">
-                                    <option value="">Selecciona una carrera...</option>
-                                    <option value="ISC">Ingeniería en Sistemas Computacionales</option>
-                                    <option value="LCD">Licenciatura en Ciencia de Datos</option>
-                                    <option value="IIA">Ingeniería en Inteligencia Artificial</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="tutor">¿Serás un mentor?</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="tutor" id="tutorSi" value="si">
-                                    <label class="form-check-label" for="tutorSi">
-                                        Sí
-                                    </label>
+                            
+                            <div class="wrapper mb-3">
+                                <div class="option">
+                                    <input class="inputsel" type="radio" name="btn" value="ISC">
+                                    <div class="btn">
+                                        <span class="span">ISC</span>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="tutor" id="tutorNo" value="no">
-                                    <label class="form-check-label" for="tutorNo">
-                                        No
-                                    </label>
+                                <div class="option">
+                                    <input class="inputsel" type="radio" name="btn" value="LCD">
+                                    <div class="btn">
+                                        <span class="span">LCD</span>
+                                    </div>
+                                </div>
+                                <div class="option">
+                                    <input class="inputsel" type="radio" name="btn" value="IIA">
+                                    <div class="btn">
+                                        <span class="span">IIA</span>
+                                    </div>
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="d-flex justify-content-center" for="tutor">¿Serás un mentor?</label>
 
+                                <div class="radio-input">
+                                    <label>
+                                        <input value="si" name="value-radio" id="tutorSi" type="radio" >
+                                        <span>Si</span>
+                                    </label>
+                                    <label>
+                                        <input value="no" name="value-radio" id="tutorNo" type="radio">
+                                        <span>No</span>
+                                    </label>
+                                    <span class="selection"></span>
+                                </div>
+                            </div>
+                          
                             <div class="text-center mb-3">
-                                <button type="submit" class="btn btn-primary">Registrarse</button>
+                                <button type="submit">Registrarse</button>
                             </div>
+
                         </EditForm>
                     </RadzenColumn>
                     <RadzenColumn Size="12" SizeMD="6">
