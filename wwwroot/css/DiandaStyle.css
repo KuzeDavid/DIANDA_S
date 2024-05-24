@@ -55,60 +55,6 @@ body {
         height: 0;
     }
 
-/* Slider registro */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #B0B0B0;
-    border: 1px solid #B0B0B0;
-    transition: .4s;
-    border-radius: 15px;
-    outline: none;
-}
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
-        outline: 2px solid #B0B0B0;
-        left: -1px;
-        bottom: -1px;
-        background-color: #fff;
-        transition: transform .25s ease-in-out 0s;
-    }
-
-.slider-icon {
-    opacity: 0;
-    height: 8px;
-    width: 8px;
-    stroke-width: 8;
-    position: absolute;
-    z-index: 999;
-    stroke: #222222;
-    right: 60%;
-    top: 30%;
-    transition: right ease-in-out .3s, opacity ease-in-out .15s;
-}
-
-input:checked + .slider {
-    background-color: #222222;
-}
-
-    input:checked + .slider .slider-icon {
-        opacity: 1;
-        right: 20%;
-    }
-
-    input:checked + .slider:before {
-        transform: translateX(1.5em);
-        outline-color: #181818;
-    }
 
 /* file input modal*/
 .custum-file-upload {
