@@ -7,7 +7,7 @@ from nltk.stem import PorterStemmer #algoritmo de lematizacion de palabras (lema
 from sklearn.feature_extraction.text import TfidfVectorizer
 from statistics import mode
 import snowballstemmer
-from spellchecker import SpellChecker
+#from spellchecker import SpellChecker
 
 app = Flask(__name__)
 
@@ -33,18 +33,11 @@ def recibir_respuestas():
 
         data = pd.read_excel("respuestas_formulario.xlsx")
         data.dropna(inplace=True)
-        spell = SpellChecker(language='es')
+        #spell = SpellChecker(language='es')
         stop_words = set(stopwords.words("es"))
         stemmer = snowballstemmer.stemmer('spanish')
-
-        def correct_spelling(text):
-            words = text.split()
-            corrected_words = [spell.correction(word) for word in words]
-            print(corrected_words)
-            return " ".join(corrected_words)
         
         def preprocess_text(text):
-            text = correct_spelling(text)
             tokens = word_tokenize(text.lower()) #se convierte todo a minusculas y se divide en tokens
             tokens = [token for token in tokens if token not in stop_words] #si un token es una palabra vacia, se elimina
             tokens = [stemmer.stemWord(token) for token in tokens] #a cada token no eliminado se aplica stemmer
